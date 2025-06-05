@@ -1,20 +1,22 @@
 FROM 3liz/lizmap-web-client:3.8.10
 
-# Optional: custom plugin
+# Optional: Custom plugin
 COPY ./lizmap_server /var/www/webapps/qgis-server/plugins/lizmap_server
 
-# Let the image initialize FIRST (this happens at container start)
-# Then override project and config folders
-# So we move the override COPY to an entrypoint script or CMD level
-
-# Instead of copying config in Dockerfile, mount it at runtime via volumes (or use startup script)
-
+# Copy your QGIS projects
 COPY ./projects /srv/projects
 
-# ADD custom entrypoint script
+# Store your custom configs temporarily (we'll copy them later)
+COPY ./lizmap-config /srv/config
+
+# Add the custom entrypoint
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Override entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
+
+# Start supervisor
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+
 
