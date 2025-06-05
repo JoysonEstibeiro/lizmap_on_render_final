@@ -1,0 +1,3 @@
+;<?php die('');?> live local configuration
+[coordplugin_auth]
+persistant_encryption_key=def00000dcbdc4567372decddbdf3cba64adeecf261cf2c8bcbef477badaf8adb897223d0249637e51bece032f05165c8d6f0198334fcb783dbc54d118e6d6b229d40342
